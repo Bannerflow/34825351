@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
-import { pokemonRoutes } from './pokemon-app.routes';
+import { pokemonRoutes } from '../../shared/routes/pokemon-app.routes';
 import { RouterOutlet, ROUTES } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -15,6 +15,5 @@ import { CommonModule } from '@angular/common';
     },
   ],
   templateUrl: './pokemon-app-layout.component.html',
-  styleUrl: './pokemon-app-layout.component.scss',
 })
 export class PokemonAppLayoutComponent {}

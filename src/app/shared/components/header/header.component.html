@@ -1,1 +1,28 @@
-header
+<header class="bg-white dark:bg-gray-800 shadow-md">
+  <div class="container mx-auto flex justify-between items-center p-6">
+    <a
+      [routerLink]="routes.list"
+      class="pokemons-logo text-2xl font-bold text-blue-600 dark:text-white"
+    >
+    </a>
+    <nav class="hidden md:flex space-x-6">
+      <a
+        routerLink="/"
+        class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+        >All Pokémon</a
+      >
+      <a
+        routerLink="/about"
+        class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+        >Source code</a
+      >
+    </nav>
+    <a
+      routerLink="/get-started"
+      class="flex flex-row justify-between items-center bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition cursor-pointer"
+    >
+      <div class="i-lucide-shuffle me-2"></div>
+      <div>Random</div>
+    </a>
+  </div>
+</header>
