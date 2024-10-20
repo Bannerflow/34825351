@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { pokemonPaths } from '../../routes/pokemon-app.routes';
+import { pokemonPaths } from '../../../layouts/pokemon-app-layout/pokemon-app.routes';
 
 @Component({
   selector: 'p-header',
