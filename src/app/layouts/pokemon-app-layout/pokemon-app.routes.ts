@@ -20,6 +20,7 @@ export const pokemonRoutes: Routes = [
           import('../../pages/pokemon-list/pokemon-list.component').then(
             (m) => m.PokemonListComponent
           ),
+        title: 'Pokemon list',
       },
       {
         path: 'show/:pokemonId',
