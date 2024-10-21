@@ -7,11 +7,12 @@ import { PokemonDetailService } from './pokemon-detail.service';
 import { catchError, finalize, Observable, Subscription, tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { pokemonPaths } from '../../layouts/pokemon-app-layout/pokemon-app.routes';
+import { CoreModule } from '../../core/core.module';
 
 @Component({
   selector: 'p-pokemon-detail',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, CoreModule],
   providers: [PokemonDetailService],
   templateUrl: './pokemon-detail.component.html',
 })

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Pokemon } from '../../shared/models/pokemon.model';
 import {
@@ -25,7 +25,7 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [CommonModule, SharedModule],
   templateUrl: './pokemon-list.component.html',
 })
-export class PokemonListComponent {
+export class PokemonListComponent implements OnInit {
   pokemons$: Observable<Pokemon[]>;
   hasNext$: Observable<Boolean>;
   hasPrev$: Observable<Boolean>;
@@ -35,13 +35,14 @@ export class PokemonListComponent {
     private store: Store,
     private router: Router
   ) {
-    this.store.dispatch(listInitialPokemonAction());
     this.pokemons$ = this.store.select(selectViewPokemons);
     this.hasNext$ = this.store.select(selectHasNext);
     this.hasPrev$ = this.store.select(selectHasPrev);
     this.loading$ = this.store.select(selectPokemonListLoading);
+  }
 
-    this.pokemons$.subscribe(console.log);
+  ngOnInit(): void {
+    this.store.dispatch(listInitialPokemonAction());
   }
 
   /**

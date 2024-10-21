@@ -24,9 +24,7 @@ export class PokemonDetailService {
   private pokemonDetailsSubject = new BehaviorSubject<PokemonDetails | null>(
     null
   );
-
   private pokemonEvolutionsSubject = new BehaviorSubject<PokemonDetails[]>([]);
-
   pokemonDetails$ = this.pokemonDetailsSubject.asObservable();
   pokemonEvolutions$ = this.pokemonEvolutionsSubject.asObservable();
 
@@ -66,7 +64,7 @@ export class PokemonDetailService {
               this.convertEvolutionChainToArray(evolutionChain.chain)
             )
           )
-          .pipe(this.loadEvolutionDetails)
+          .pipe(this.loadEvolutionDetails.bind(this))
       )
     );
   }
