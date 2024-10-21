@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import {
   goToNextPageAction,
   goToPrevPageAction,
+  goToRandomPokemonDetailAction,
   listInitialPokemonAction,
 } from '../../store/pokemon-list/pokemon-list.actions';
 import { Router } from '@angular/router';
@@ -23,7 +24,6 @@ import { SharedModule } from '../../shared/shared.module';
   standalone: true,
   imports: [CommonModule, SharedModule],
   templateUrl: './pokemon-list.component.html',
-  styleUrl: './pokemon-list.component.scss',
 })
 export class PokemonListComponent {
   pokemons$: Observable<Pokemon[]>;
@@ -40,21 +40,8 @@ export class PokemonListComponent {
     this.hasNext$ = this.store.select(selectHasNext);
     this.hasPrev$ = this.store.select(selectHasPrev);
     this.loading$ = this.store.select(selectPokemonListLoading);
-  }
 
-  /**
-   * Replaces the pokemon image with the main image if the dream image load was failed
-   * @param event load failed event to get the image target
-   * @param mainImageUrl main image url to replace
-   */
-  handlePokemonImageError(event: Event, mainImageUrl: string): void {
-    if (
-      event.target &&
-      'src' in event?.target &&
-      event.target.src !== mainImageUrl
-    ) {
-      event.target.src = mainImageUrl;
-    }
+    this.pokemons$.subscribe(console.log);
   }
 
   /**
@@ -72,7 +59,10 @@ export class PokemonListComponent {
   }
 
   goToDetailsPage(id: string): void {
-    console.log('ddd');
     this.router.navigate([pokemonPaths.showOne(id)]);
+  }
+
+  goToRandomPokemonDetail(): void {
+    this.store.dispatch(goToRandomPokemonDetailAction());
   }
 }

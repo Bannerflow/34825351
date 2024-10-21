@@ -1,0 +1,7 @@
+<img
+  *ngIf="dreamImage || mainImage"
+  [src]="dreamImage || mainImage"
+  [alt]="name"
+  (error)="handlePokemonImageError($event, mainImage)"
+  class="w-full h-40 object-contain mb-3 rounded"
+/>

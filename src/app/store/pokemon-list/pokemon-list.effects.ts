@@ -4,7 +4,6 @@ import {
   catchError,
   EMPTY,
   filter,
-  flatMap,
   map,
   mergeMap,
   of,
@@ -13,6 +12,7 @@ import {
 import { PokeApiService } from '../../core/services/poke-api.service';
 import {
   goToNextPageAction,
+  goToRandomPokemonDetailAction,
   listInitialPokemonAction,
   listInitialPokemonSuccessAction,
   listNextPokemonAction,
@@ -26,8 +26,14 @@ import {
   getPokemonMainImage,
 } from '../../utils/poke-api.util';
 import { Store } from '@ngrx/store';
-import { selectNextUrl, selectPokemonState } from './pokemon-list.selectors';
+import {
+  selectNextUrl,
+  selectPokemonState,
+  selectViewPokemons,
+} from './pokemon-list.selectors';
 import { PokemonListResponse } from '../../core/models/poke-api.model';
+import { Router } from '@angular/router';
+import { pokemonPaths } from '../../layouts/pokemon-app-layout/pokemon-app.routes';
 
 const processListApiResponse = (data: PokemonListResponse) => {
   const pokemonList = data.results.map((pokemon) => {
@@ -50,20 +56,30 @@ const processListApiResponse = (data: PokemonListResponse) => {
 };
 
 export const loadInitalPokemons = createEffect(
-  (actions$ = inject(Actions), pokeApiService = inject(PokeApiService)) => {
+  (
+    actions$ = inject(Actions),
+    pokeApiService = inject(PokeApiService),
+    store = inject(Store)
+  ) => {
     return actions$.pipe(
       // on each listInitialPokemonAction action
       ofType(listInitialPokemonAction),
+
+      // get latest list to avoid calling if pokemon are already loaded
+      withLatestFrom(store.select(selectViewPokemons)),
+
       // switch to a new observable that fetches the list and emits the success action
-      mergeMap(() =>
-        pokeApiService.getFirstPokemonList(ListLimit).pipe(
-          map((data) =>
-            listInitialPokemonSuccessAction(processListApiResponse(data))
-          ),
-          catchError((error) =>
-            of(listPokemonFailureAction({ error: error.message }))
-          )
-        )
+      mergeMap(([_, pokemons]) =>
+        !pokemons.length
+          ? pokeApiService.getFirstPokemonList(ListLimit).pipe(
+              map((data) =>
+                listInitialPokemonSuccessAction(processListApiResponse(data))
+              ),
+              catchError((error) =>
+                of(listPokemonFailureAction({ error: error.message }))
+              )
+            )
+          : EMPTY
       )
     );
   },
@@ -102,7 +118,7 @@ export const goToNextPage = createEffect(
     return actions$.pipe(
       // on each listNextPokemonAction action
       ofType(goToNextPageAction),
-      // get next url to fetch the list
+      // get current pokemon store state
       withLatestFrom(store.select(selectPokemonState)),
       mergeMap(([_, pokemonState]) => {
         if (
@@ -116,4 +132,27 @@ export const goToNextPage = createEffect(
     );
   },
   { functional: true }
+);
+
+export const goToRandomPokemon = createEffect(
+  (
+    actions$ = inject(Actions),
+    store = inject(Store),
+    router = inject(Router)
+  ) => {
+    return actions$.pipe(
+      // on each goToRandomPokemonDetail action
+      ofType(goToRandomPokemonDetailAction),
+      // get current pokemon store state
+      withLatestFrom(store.select(selectPokemonState)),
+      mergeMap(([_, pokemonState]) => {
+        if (pokemonState.count) {
+          const randomId = Math.floor(Math.random() * pokemonState.count) + 1;
+          router.navigate([pokemonPaths.showOne(randomId.toString())]);
+        }
+        return EMPTY;
+      })
+    );
+  },
+  { functional: true, dispatch: false }
 );

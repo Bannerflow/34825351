@@ -43,3 +43,8 @@ export const goToNextPageAction = createAction('[Pokemon List Page] Next Page');
 export const goToPrevPageAction = createAction(
   '[Pokemon List Page] Previous Page'
 );
+
+// load previous items into the view
+export const goToRandomPokemonDetailAction = createAction(
+  '[App] Go to Random Pokemon'
+);

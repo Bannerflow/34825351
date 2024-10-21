@@ -9,26 +9,16 @@ export interface Pokemon {
 export interface PokemonDetails {
   id: string;
   name: string;
-  height: number;
-  weight: number;
-  sprites: {
-    front_default: string;
-    other?: {
-      'official-artwork'?: {
-        front_default: string;
-      };
-    };
-  };
-  abilities: {
-    ability: {
-      name: string;
-    };
-  }[];
-  evolutions?: Evolution[];
+  mainImage: string;
+  dreamImage?: string;
+  abilities: string[];
 }
 
-export interface Evolution {
-  id: number;
+export interface PokemonEvolution {
   name: string;
-  image: string;
+  speciesUrl: string;
+}
+
+export interface PokemonEvolutionWithId extends PokemonEvolution {
+  id: string;
 }
