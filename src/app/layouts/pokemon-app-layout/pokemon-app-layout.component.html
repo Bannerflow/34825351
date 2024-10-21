@@ -2,9 +2,12 @@
   <p-header></p-header>
 
   <div class="flex-grow">
-    <p-loading [show]="routeLoading"></p-loading>
-
-    <router-outlet></router-outlet>
+    <ng-container *ngIf="!routeLoading; else loading">
+      <router-outlet></router-outlet>
+    </ng-container>
+    <ng-template #loading>
+      <p-loading [show]="routeLoading"></p-loading>
+    </ng-template>
   </div>
 
   <p-footer></p-footer>
