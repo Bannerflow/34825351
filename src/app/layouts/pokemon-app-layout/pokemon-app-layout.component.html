@@ -2,6 +2,8 @@
   <p-header></p-header>
 
   <div class="flex-grow">
+    <p-loading [show]="routeLoading"></p-loading>
+
     <router-outlet></router-outlet>
   </div>
 

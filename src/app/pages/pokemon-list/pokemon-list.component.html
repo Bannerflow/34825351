@@ -1,27 +1,37 @@
 <div class="container mx-auto py-6">
   <h1 class="text-2xl font-bold mb-4 dark:text-white">Pokémon List</h1>
 
+  <p-loading [show]="!!(loading$ | async)"></p-loading>
   <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
     <div
+      *ngFor="let pokemon of pokemons$ | async"
       class="bg-gray-200 dark:bg-gray-900 hover:dark:bg-gray-950 hover:bg-gray-300 shadow-md rounded-lg p-4 text-center cursor-pointer"
+      (click)="goToDetailsPage(pokemon.id)"
     >
       <img
-        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
-        alt="bulbasaur"
-        class="w-full h-40 object-cover mb-2 rounded"
+        [src]="pokemon.dreamImage"
+        [alt]="pokemon.name"
+        (error)="handlePokemonImageError($event, pokemon.mainImage)"
+        class="w-full h-40 object-contain mb-3 rounded"
       />
-      <h2 class="text-lg font-semibold dark:text-white">Bulbasaur</h2>
+      <h2 class="text-lg font-semibold dark:text-white">
+        {{ pokemon.name | titlecase }}
+      </h2>
     </div>
   </div>
 
   <div class="flex justify-end mt-4 gap-x-3">
     <button
-      class="dark:bg-gray-700 bg-gray-300 text-white py-2 px-4 rounded-full hover:bg-gray-500 transition"
+      [disabled]="!(hasPrev$ | async)"
+      (click)="goToPreviousPage()"
+      class="dark:bg-gray-700 bg-gray-300 text-white py-2 px-4 rounded-full hover:bg-gray-500 transition disabled:bg-gray-800 disabled:cursor-not-allowed"
     >
       <span class="i-lucide-chevron-left"></span>
     </button>
     <button
-      class="dark:bg-gray-700 bg-gray-300 text-white py-2 px-4 rounded-full hover:bg-gray-500 transition"
+      [disabled]="!(hasNext$ | async)"
+      (click)="goToNextPage()"
+      class="dark:bg-gray-700 bg-gray-300 text-white py-2 px-4 rounded-full hover:bg-gray-500 transition disabled:bg-gray-800 disabled:cursor-not-allowed"
     >
       <span class="i-lucide-chevron-right"></span>
     </button>
