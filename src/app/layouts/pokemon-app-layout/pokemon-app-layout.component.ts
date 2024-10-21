@@ -24,7 +24,6 @@ export class PokemonAppLayoutComponent implements OnDestroy {
   }
 
   private checkRouterEvent(routerEvent: RouterEvent): void {
-    console.log(routerEvent);
     if (routerEvent instanceof NavigationStart) {
       this.showRouterLoading();
     }
