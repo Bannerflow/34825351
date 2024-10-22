@@ -7,7 +7,6 @@ import {
   Router,
   RouterEvent,
 } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'p-pokemon-app-layout',

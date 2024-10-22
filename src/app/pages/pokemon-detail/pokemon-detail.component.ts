@@ -8,6 +8,7 @@ import { catchError, finalize, Observable, Subscription, tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { pokemonPaths } from '../../layouts/pokemon-app-layout/pokemon-app.routes';
 import { CoreModule } from '../../core/core.module';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'p-pokemon-detail',
@@ -27,7 +28,8 @@ export class PokemonDetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private pokemonDetailService: PokemonDetailService,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) {
     this.pokemonDetails$ = this.pokemonDetailService.pokemonDetails$;
     this.pokemonEvolutions$ = this.pokemonDetailService.pokemonEvolutions$;
@@ -52,7 +54,10 @@ export class PokemonDetailComponent implements OnInit, OnDestroy {
     this.pokemonDetailService
       .loadPokemonDetails(id)
       .pipe(
-        tap(() => (this.loadingDetails = false)),
+        tap((details) => {
+          this.loadingDetails = false;
+          this.title.setTitle(details.name);
+        }),
         catchError((error) => {
           this.loadingDetails = false;
           if (error instanceof HttpErrorResponse) {
