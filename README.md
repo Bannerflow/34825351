@@ -21,7 +21,7 @@ Build a web application that uses the Pokemon API to display a list of Pokemon a
 - Clicking on a Pokemon in the list should navigate to the detail page, which should display the Pokemon's name, image, abilities (names), and evolutions (if any).
 - If the selected Pokemon has evolutions, they should be displayed as a list with their images and names. Clicking on an evolution should navigate to its detail page.
 - Users should be able to navigate between the list and detail pages using the browser's back and forward buttons.
-- Users should be able to bookmark (web browser) or share a link of their favorite Pokemon's details page. 
+- Users should be able to bookmark (web browser) or share a link of their favorite Pokemon's details page.
 
 ## Tests
 
@@ -29,9 +29,10 @@ Build a web application that uses the Pokemon API to display a list of Pokemon a
 
 You don't have to spend too much time on styling if you're limited on time. Just focus on building an application that will make even Pikachu proud.
 
-
 ## When Finished
-You have been invited as an outside collaborator in this repository. 
+
+You have been invited as an outside collaborator in this repository.
 Please send the code test to us by:
-* Create a new branch in this repository
-* Create a pull request from that branch to the main branch
+
+- Create a new branch in this repository
+- Create a pull request from that branch to the main branch

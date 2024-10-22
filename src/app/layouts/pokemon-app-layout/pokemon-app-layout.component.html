@@ -1,0 +1,14 @@
+<div class="flex flex-col min-h-screen">
+  <p-header></p-header>
+
+  <div class="flex-grow">
+    <ng-container *ngIf="!routeLoading; else loading">
+      <router-outlet></router-outlet>
+    </ng-container>
+    <ng-template #loading>
+      <p-loading [show]="routeLoading"></p-loading>
+    </ng-template>
+  </div>
+
+  <p-footer></p-footer>
+</div>
